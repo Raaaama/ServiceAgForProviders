@@ -10,18 +10,12 @@ function LogIn(props) {
   const [emadress, setEmadress] = useState("");
   const [password, setPassword] = useState("");
 
-  const config = {
-    headers: {
-      "Access-Control-Allow-Origin": props.ip,
-      "Content-Type": "application/json",
-      "ngrok-skip-browser-warning": "1",
-    },
-  };
+  const { ip, config } = props
 
   const LogInSubmit = () => {
     axios
       .get(
-        props.ip +
+        ip +
           "/api/providers/check?" +
           "&emadress=" +
           emadress +
@@ -70,7 +64,7 @@ function LogIn(props) {
 }
 
 const mapStateToProps = (state) => {
-  return { ip: state.ip, uid: state.uid, showReg: state.showReg };
+  return { ip: state.ip, uid: state.uid, showReg: state.showReg, config: state.config };
 };
 
 export default connect(mapStateToProps, actions)(LogIn);

@@ -3,15 +3,14 @@ import { useEffect, useState } from "react";
 import { encode, decode } from "js-base64";
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
-import "./Enrollments.css"
+import "./Enrollments.css";
 import BasicTable from "../Table/Table";
-
+import Header from "../Header/Header";
 
 function Enrollments(props) {
+  const [enrollments, setEnrollments] = useState([]);
 
-  const [enrollments, setEnrollments] = useState([])
-
-  const { ip, uid } = props
+  const { ip, uid } = props;
 
   const config = {
     headers: {
@@ -23,33 +22,32 @@ function Enrollments(props) {
 
   const getEnrollments = () => {
     axios
-      .get(
-        ip +
-          "/api/enrollments/provider?idp=" + uid, config
-      )
+      .get(ip + "/api/enrollments/provider?idp=" + uid, config)
       .then((res) => {
-        let data = res.data
+        let data = res.data;
         for (let i = 0; i < data.length; i++) {
-          let time = new Date(data[i].signUpDate)
+          let time = new Date(data[i].signUpDate);
           time = time.getTime() + 6 * 60 * 60000;
           time = new Date(time);
           time = time.toISOString();
-          data[i].signUpDate = data[i].signUpDate.substring(0,10) + " " + time.substring(11,16)
-          // console.log(data[i].signUpDate.substring(0,9) + " " + time.substring(11,15))
+          data[i].signUpDate =
+            data[i].signUpDate.substring(0, 10) + " " + time.substring(11, 16);
         }
-        setEnrollments(data)
+        setEnrollments(data);
+        // console.log(123)
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
     getEnrollments();
-  });
+  }, []);
 
   return (
     <div>
+      <Header />
       <h1>Записи</h1>
-      <BasicTable data = {enrollments}/>
+      <BasicTable data={enrollments} getEnrollments={getEnrollments} />
     </div>
   );
 }
