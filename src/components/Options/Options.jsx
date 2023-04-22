@@ -83,7 +83,7 @@ export default function Options(props) {
       <Button variant="outlined" sx={btn}>Добавить опцию</Button>
       <br></br>
       <br></br>
-      <Button variant="outlined" sx={redBtn}>Удалить выбранную</Button>
+      <Button variant="outlined" sx={redBtn}>Удалить выбранную опцию</Button>
       <br></br>
       <br></br>
       <Button key="refresh" variant="outlined" sx={btn}>Обновить</Button>

@@ -17,6 +17,8 @@ function App(props) {
   const modal = showModal ? <Settings /> : null
   const serviceModal = showServiceModal ? <ServiceModal /> : null
 
+  
+
   return (
     <div className="App">
       {logIn}

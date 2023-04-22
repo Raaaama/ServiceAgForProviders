@@ -1,5 +1,5 @@
 const initialState = {
-  ip: "https://e506-2-135-26-114.ngrok-free.app",
+  ip: "https://ed1b-2-135-26-114.ngrok-free.app",
   uid: "",
   showLogIn: true,
   showReg: false,
@@ -9,7 +9,7 @@ const initialState = {
   images: [],
   config: {
     headers: {
-      "Access-Control-Allow-Origin": "https://e506-2-135-26-114.ngrok-free.app",
+      "Access-Control-Allow-Origin": "https://ed1b-2-135-26-114.ngrok-free.app",
       "Content-Type": "application/json",
       "ngrok-skip-browser-warning": "1",
     },

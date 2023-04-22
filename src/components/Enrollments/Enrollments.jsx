@@ -34,7 +34,7 @@ function Enrollments(props) {
             data[i].signUpDate.substring(0, 10) + " " + time.substring(11, 16);
         }
         setEnrollments(data);
-        // console.log(123)
+        // console.log(uid)
       })
       .catch((err) => console.log(err));
   };

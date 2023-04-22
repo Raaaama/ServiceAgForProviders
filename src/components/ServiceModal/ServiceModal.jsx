@@ -19,13 +19,13 @@ import OptionEditor from '../OptionEditor/OptionEditor';
 const modal = {
   color: "black",
   overflowX: "scroll",
-  overflowX: "hidden",
+  overflowY: "hidden",
   height: "100%",
 };
 
 const style = {
   position: 'absolute',
-  top: '55%',
+  top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
@@ -33,6 +33,9 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  height: "max-content",
+  maxHeight: "80%",
+  overflowX: "auto"
 };
 
 const input = {

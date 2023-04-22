@@ -15,6 +15,8 @@ import ImageListItemBar from "@mui/material/ImageListItemBar";
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 
+import CloudinaryUploadWidget from '../CloudinaryWidget/CloudinaryUploadWidget';
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -25,13 +27,15 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  height: "max-content",
+  maxHeight: "80%",
+  overflowX: "auto"
 };
 
 const modal = {
   color: "black",
-  overflowX: "scroll",
-  overflowX: "hidden",
-  height: "100%",
+  // overflowX: "scroll",
+  // overflowY: "hidden",
 };
 
 const input = {
@@ -51,8 +55,24 @@ const btn = {
 },
 }
 
+const del = {
+  height: "10%",
+  width: "80%",
+  margin: "2%",
+  alignSelf: "center",
+  color:"red",
+  fontFamily:"Manrope",
+  fontSize: 12,
+  border:"2px solid red",
+  '&:hover': {
+    backgroundColor: 'red',
+    color: '#FFF',
+    border:"2px solid red",
+},
+}
+
 function Settings(props) {
-  const { ip, uid, config, images, showModal, info, myServices, setShowServiceModal, setCurrentService, setOptions} = props
+  const { ip, uid, config, images, showModal, info, myServices, setShowServiceModal, setCurrentService, setOptions, setImages} = props
 
   useEffect(() => {
 
@@ -72,6 +92,35 @@ function Settings(props) {
       .catch((err) => console.log(err));
   }
 
+  function deleteImage(id) {
+    axios
+      .post(ip + "/api/image/delete", {
+        id: id,
+      })
+      .then((res) => {
+        axios
+        .get(ip + "/api/image?idp=" + uid, config)
+        .then((res) => {
+          setImages(res.data);
+        })
+      })
+      .catch((err) => console.log(err));
+  }
+
+  const [name, setName] = useState(info.name)
+  const [adress, setAdress] = useState(info.adress)
+  const [emadress, setEmadress] = useState(info.emadress)
+
+  function handleInfoRefresh() {
+    axios.put(ip + '/api/providers', {
+      name: name,
+      adress: adress,
+      emadress: emadress,
+      idp: uid
+    })
+    .catch((err) => console.log(err));
+  }
+
   return (
     <div>
       <Modal
@@ -87,26 +136,30 @@ function Settings(props) {
             sx={{
               gridAutoFlow: "column",
               gridTemplateColumns: "repeat(auto-fill,minmax(200px,1fr)) !important",
-              gridAutoColumns: "minmax(200px, 1fr)"
+              gridAutoColumns: "minmax(200px, 1fr)",
             }}
           >
-            {images.map((url) => (
-              <ImageListItem key={url}>
-                <img src={url} sx={{innerHeight: "10vh"}} />
+            {images.map((el, index) => (
+              <ImageListItem key={el.image_url}>
+                <img src={el.image_url} sx={{innerHeight: "10vh"}}/>
                 {/* <ImageListItemBar title={"image"} /> */}
+                <Button variant="outlined" sx={del} onClick={() => deleteImage(el.idimage)}>УДАЛИТЬ</Button>
               </ImageListItem>
             ))}
           </ImageList>
-          <TextField defaultValue={info.name} id="outlined-basic" label="Название" variant="outlined" sx={input} />
+          <CloudinaryUploadWidget />
           <br></br>
           <br></br>
-          <TextField defaultValue={info.adress} id="outlined-basic" label="Адрес" variant="outlined" sx={input} />
+          <TextField defaultValue={info.name} id="outlined-basic" label="Название" variant="outlined" sx={input} onChange={(e) => setName(e.target.value)}/>
           <br></br>
           <br></br>
-          <TextField defaultValue={info.emadress} id="outlined-basic" label="Адрес эл. почты" variant="outlined" sx={input} />
+          <TextField defaultValue={info.adress} id="outlined-basic" label="Адрес" variant="outlined" sx={input} onChange={(e) => setAdress(e.target.value)}/>
           <br></br>
           <br></br>
-          <Button key="refresh" variant="outlined" sx={btn}>Обновить</Button>
+          <TextField defaultValue={info.emadress} id="outlined-basic" label="Логин" variant="outlined" sx={input} onChange={(e) => setEmadress(e.target.value)}/>
+          <br></br>
+          <br></br>
+          <Button key="refresh" variant="outlined" sx={btn} onClick={() => handleInfoRefresh()}>Обновить</Button>
           <br></br>
           <h2>Мои услуги:</h2>
           {/* {myServices.map((el) => (

@@ -7,11 +7,19 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
+import "./Select.css";
 
 const menuItemStyle = {
     color: "black",
     fontFamily: "Manrope",
     fontSize:"20px"
+}
+
+const select = {
+  color: "orange", 
+  fontFamily: "Manrope", 
+  fontSize:"20px", 
+  backgroundColor: "#141414", 
 }
 
 function BasicSelect(props) {
@@ -24,12 +32,26 @@ function BasicSelect(props) {
         status: event.target.value,
       })
       .then((res) => {
-        // alert(res.data.res)
         getEnrollments();
-        // console.log(res.data)
       })
       .catch((err) => console.log(err));
   };
+
+  if (status == 1) {
+    return (
+      <div>
+        <h4 style={{color:"green"}}>Принято</h4>
+      </div>
+    )
+  }
+
+  else if (status == 2) {
+    return (
+      <div>
+        <h4 style={{color:"red"}}>Отклонено</h4>
+      </div>
+    )
+  }
 
   return (
     <Box sx={{ minWidth: 120 }}>
@@ -40,7 +62,7 @@ function BasicSelect(props) {
           value={status}
           label=""
           onChange={handleChange}
-          sx = {{color: "white", fontFamily: "Manrope", fontSize:"20px", backgroundColor: "#141414", borderColor: "white"}}
+          sx = {select}
         >
           <MenuItem sx={menuItemStyle} value={0}>{"На рассмотрении"}</MenuItem>
           <MenuItem sx={menuItemStyle} value={1}>{"Принято"}</MenuItem>

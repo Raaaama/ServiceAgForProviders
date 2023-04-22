@@ -13,11 +13,7 @@ function Header(props) {
     axios
       .get(ip + "/api/image?idp=" + uid, config)
       .then((res) => {
-        let temp = [];
-        res.data.forEach((el) => {
-          temp.push(el.image_url);
-        });
-        setImages(temp);
+        setImages(res.data);
       })
       .then(() => {
         axios

@@ -1,0 +1,14 @@
+td .MuiOutlinedInput-notchedOutline {
+  border-width: 1px !important;
+  border: 1px solid orange !important;
+}
+
+.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-width: 1px !important;
+  border: 1px solid orange;
+}
+
+.MuiSelect-select {
+  border-width: 1px !important;
+  border: 1px solid orange;
+}
