@@ -6,6 +6,9 @@ import * as actions from "../../redux/actions";
 import "./Enrollments.css";
 import BasicTable from "../Table/Table";
 import Header from "../Header/Header";
+import OptionFilter from "../Filter/OptionFilter";
+import StatusFilter from "../StatusFilter/StatusFilter";
+import ServiceFilter from "../ServiceFilter/ServiceFilter";
 
 function Enrollments(props) {
   const [enrollments, setEnrollments] = useState([]);
@@ -47,6 +50,11 @@ function Enrollments(props) {
     <div>
       <Header />
       <h1>Записи</h1>
+      <div className="filters">
+        <ServiceFilter enrollments={enrollments}/>
+        <OptionFilter data={enrollments}/>
+        <StatusFilter />
+      </div>
       <BasicTable data={enrollments} getEnrollments={getEnrollments} />
     </div>
   );

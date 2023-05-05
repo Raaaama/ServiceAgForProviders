@@ -8,7 +8,7 @@ import Select from "@mui/material/Select";
 export default function BasicSelect(props) {
   const [op, setOp] = React.useState("");
 
-  const { options } = props;
+  const { options, handleOption } = props;
 
   const handleChange = (event) => {
     setOp(event.target.value);
@@ -25,8 +25,8 @@ export default function BasicSelect(props) {
           label="Опция"
           onChange={handleChange}
         >
-          {options.map((el) => (
-            <MenuItem key={el.idoption} value={el.idoption} onClick={() => console.log(123)}>
+          {options.map((el, i) => (
+            <MenuItem key={i} value={el.idoption} onClick={() => handleOption(el.idoption)}>
               {el.opt}
             </MenuItem>
           ))}

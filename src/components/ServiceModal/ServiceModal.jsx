@@ -15,6 +15,8 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Options from '../Options/Options';
 import OptionEditor from '../OptionEditor/OptionEditor';
+import { refreshMyServices, refreshNewServices, deleteService } from '../../functions.jsx';
+import { useDispatch } from 'react-redux';
 
 const modal = {
   color: "black",
@@ -55,12 +57,50 @@ const btn = {
 },
 }
 
+const redBtn = {
+  width: "100%",
+  color: "red",
+  outline: "red",
+  fontFamily: "Manrope",
+  border: "2px solid red",
+  "&:hover": {
+    backgroundColor: "red",
+    color: "#FFF",
+    border: "2px solid red",
+  },
+};
+
 function ServiceModal(props) {
   const { ip, uid, config, images, showModal, info, myServices, showServiceModal, setShowServiceModal, currentService, options } = props
+
+  const [price, setPrice] = useState(currentService.price)
+  const [timePerService, setTimePerService] = useState(currentService.timePerService)
+  const [description, setDescription] = useState(currentService.description)
+
+  const dispatch = useDispatch()
 
   let hasOptions = false;
   if (options.length != 0) {
     hasOptions = true;
+  }
+
+  function handleUpdateService(id) {
+    axios.put(ip + '/api/service', {
+      id: id,
+      price: price,
+      timePerService: timePerService,
+      description: description
+    })
+    .catch((err) => console.log(err));
+  }
+
+  async function handleDeleteService(id) {
+    try {
+      let res = await deleteService(ip, uid, config, dispatch, id);
+      setShowServiceModal(false);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
@@ -74,17 +114,19 @@ function ServiceModal(props) {
         sx={modal}
       >
         <Box sx={style}>
-          <TextField defaultValue={currentService.price} id="outlined-basic" label="Цена" variant="outlined" sx={input} />
+          <TextField defaultValue={currentService.price} onChange={(e) => setPrice(e.target.value)} id="outlined-basic" label="Цена" variant="outlined" sx={input} />
           <br></br>
           <br></br>
-          <TextField defaultValue={currentService.timePerService} id="outlined-basic" label="Время оказания услуги (мин.)" variant="outlined" sx={input} />
+          <TextField defaultValue={currentService.timePerService} onChange={(e) => setTimePerService(e.target.value)} id="outlined-basic" label="Время оказания услуги (мин.)" variant="outlined" sx={input} />
           <br></br>
           <br></br>
-          <TextField defaultValue={currentService.description} id="outlined-basic" label="Описание" variant="outlined" sx={input} multiline rows={2}/>
+          <TextField defaultValue={currentService.description} onChange={(e) => setDescription(e.target.value)} id="outlined-basic" label="Описание" variant="outlined" sx={input} multiline rows={2}/>
           <br></br>
           <br></br>
-          <Button key="refresh" variant="outlined" sx={btn}>Обновить</Button>
+          <Button key="refresh" variant="outlined" sx={btn} onClick={() => handleUpdateService(currentService.idservices)}>Обновить</Button>
           <Options options={options} hasOptions={hasOptions} />
+          <br></br>
+          <Button key="refresh" variant="outlined" sx={redBtn} onClick={() => handleDeleteService(currentService.idservices)}>Удалить услугу</Button>
         </Box>
       </Modal>
     </div>

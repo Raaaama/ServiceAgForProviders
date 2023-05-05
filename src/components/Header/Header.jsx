@@ -4,10 +4,14 @@ import { encode, decode } from "js-base64";
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
 import "./Header.css";
+import { refreshMyServices, refreshNewServices } from "../../functions.jsx";
+import { useDispatch } from "react-redux";
 
 function Header(props) {
-  const { ip, uid, config, setShowModal, setImages, setInfo, setMyServices } =
+  const { ip, uid, config, setShowModal, setImages, setInfo, setMyServices, setNewServices } =
     props;
+
+  const dispatch = useDispatch()
 
   function handleClick() {
     axios
@@ -22,15 +26,9 @@ function Header(props) {
             setInfo(res.data[0]);
           })
           .then(() => {
-            axios
-              .get(ip + "/api/service?idp=" + uid, config)
-              .then((res) => {
-                setMyServices(res.data);
-              })
-              .then(() => {
-                setShowModal(true);
-              })
-              .catch((err) => console.log(err));
+            refreshMyServices(ip, uid, config, dispatch);
+            refreshNewServices(ip, uid, config, dispatch);
+            setShowModal(true);
           })
           .catch((err) => console.log(err));
       })

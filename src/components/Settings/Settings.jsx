@@ -16,6 +16,7 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 
 import CloudinaryUploadWidget from '../CloudinaryWidget/CloudinaryUploadWidget';
+import AddService from '../AddService/AddService';
 
 const style = {
   position: 'absolute',
@@ -78,8 +79,14 @@ function Settings(props) {
 
   },[info])
 
-  function handleClick(service) {
-    setCurrentService(service);
+  async function handleClick(service) {
+    await axios
+      .get(ip + "/api/service/getone?id=" + service.idservices, config)
+      .then((res) => {
+        setCurrentService(res.data[0]);
+        // console.log(res.data[0])
+      })
+      .catch((err) => console.log(err));
     axios
       .get(ip + "/api/option?idservices=" + service.idservices, config)
       .then((res) => {
@@ -140,7 +147,7 @@ function Settings(props) {
             }}
           >
             {images.map((el, index) => (
-              <ImageListItem key={el.image_url}>
+              <ImageListItem key={el.idimage}>
                 <img src={el.image_url} sx={{innerHeight: "10vh"}}/>
                 {/* <ImageListItemBar title={"image"} /> */}
                 <Button variant="outlined" sx={del} onClick={() => deleteImage(el.idimage)}>УДАЛИТЬ</Button>
@@ -162,16 +169,14 @@ function Settings(props) {
           <Button key="refresh" variant="outlined" sx={btn} onClick={() => handleInfoRefresh()}>Обновить</Button>
           <br></br>
           <h2>Мои услуги:</h2>
-          {/* {myServices.map((el) => (
-              <h4 key="{el.name}">{el.name}</h4>
-            ))} */}
           <Stack spacing={1} direction="column">
             {myServices.map((el) => (
               // <h4 key="{el.name}">{el.name}</h4>
               <Button key={el.name} variant="outlined" sx={btn} onClick={() => handleClick(el)}>{el.name}</Button>
             ))}
-            <Button key="+" variant="outlined" sx={btn}>+</Button>
           </Stack>
+          <br></br>
+          <AddService />
         </Box>
       </Modal>
     </div>

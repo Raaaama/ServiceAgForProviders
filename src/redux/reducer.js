@@ -1,5 +1,5 @@
 const initialState = {
-  ip: "https://ed1b-2-135-26-114.ngrok-free.app",
+  ip: "https://26f0-2-135-26-114.ngrok-free.app",
   uid: "",
   showLogIn: true,
   showReg: false,
@@ -9,15 +9,19 @@ const initialState = {
   images: [],
   config: {
     headers: {
-      "Access-Control-Allow-Origin": "https://ed1b-2-135-26-114.ngrok-free.app",
+      "Access-Control-Allow-Origin": "https://26f0-2-135-26-114.ngrok-free.app",
       "Content-Type": "application/json",
       "ngrok-skip-browser-warning": "1",
     },
   },
   info: {},
   myServices: [],
+  newServices: [],
   currentService: {},
-  options: []
+  options: [],
+  optionFilter: -1,
+  statusFilter: -1,
+  serviceFilter: -1,
 };
 
 const reducer = (state = initialState, action) => {
@@ -85,6 +89,30 @@ const reducer = (state = initialState, action) => {
     return {
       ...state,
       options: action.payload,
+    }
+  }
+  else if ((action.type == "SETOPTIONFILTER")) {
+    return {
+      ...state,
+      optionFilter: action.payload,
+    }
+  }
+  else if ((action.type == "SETSTATUSFILTER")) {
+    return {
+      ...state,
+      statusFilter: action.payload,
+    }
+  }
+  else if ((action.type == "SETSERVICEFILTER")) {
+    return {
+      ...state,
+      serviceFilter: action.payload,
+    }
+  }
+  else if ((action.type == "SETNEWSERVICES")) {
+    return {
+      ...state,
+      newServices: action.payload,
     }
   }
   else {

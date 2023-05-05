@@ -21,35 +21,61 @@ const input = {
 };
 
 const btn = {
-    width: "100%",
-    color:"black",
-    outline:"black",
-    fontFamily:"Manrope",
-    border:"2px solid black",
-    '&:hover': {
-      backgroundColor: '#000',
-      color: '#FFF',
-      border:"2px solid black",
+  width: "100%",
+  color: "black",
+  outline: "black",
+  fontFamily: "Manrope",
+  border: "2px solid black",
+  "&:hover": {
+    backgroundColor: "#000",
+    color: "#FFF",
+    border: "2px solid black",
   },
-  }
+};
 
 const redBtn = {
-    width: "100%",
-    color:"red",
-    outline:"red",
-    fontFamily:"Manrope",
-    border:"2px solid red",
-    '&:hover': {
-      backgroundColor: 'red',
-      color: '#FFF',
-      border:"2px solid red",
+  width: "100%",
+  color: "red",
+  outline: "red",
+  fontFamily: "Manrope",
+  border: "2px solid red",
+  "&:hover": {
+    backgroundColor: "red",
+    color: "#FFF",
+    border: "2px solid red",
   },
+};
+
+function Options(props) {
+  const { ip, config, options, hasOptions } = props;
+
+  const [ido, setIdo] = useState();
+  const [dayOfTheWeek, setDayOfTheWeek] = useState();
+  const [timetable, setTimetable] = useState([]);
+
+  function getTimetable(id, day) {
+    if (id != undefined && day != undefined) {
+      axios
+      .get(ip + "/api/timetable?idoption=" + id + "&dayoftheweek=" + day, config)
+      .then((res) => {
+        setTimetable(res.data)
+        // console.log(res.data)
+      })
+      .catch((err) => console.log(err));
+    }
+    
   }
 
-export default function Options(props) {
-  const { options, hasOptions } = props;
+  function handleOption(ido) {
+    setIdo(ido)
+    getTimetable(ido, dayOfTheWeek)
+  }
 
-  
+  function handleDayOfTheWeek(day) {
+    setDayOfTheWeek(day)
+    getTimetable(ido, day)
+  }
+
   return (
     <div>
       <h2>Опции:</h2>
@@ -62,31 +88,43 @@ export default function Options(props) {
       />
       <br></br>
       <br></br>
-      {/* {options.map((el) => (
-        <div key={el.idoption}>
-          <TextField
-            defaultValue={hasOptions ? el.opt : ""}
-            id="outlined-basic"
-            label="Опция"
-            variant="outlined"
-            sx={input}
-          />
-          <br></br>
-          <br></br>
-        </div>
-      ))} */}
-      <BasicSelect options={options} />
-      <OptionEditor />
+      <BasicSelect options={options} handleOption={handleOption}/>
+      <OptionEditor handleDayOfTheWeek={handleDayOfTheWeek} />
       <br></br>
-      <TimeSlider />
+      {timetable.map((el, i) => (
+        <TimeSlider key={i} time={el}/>
+      ))}
       <br></br>
-      <Button variant="outlined" sx={btn}>Добавить опцию</Button>
+      <div className="addOpt">
+        <TextField
+          id="outlined-basic"
+          label="Название новой опции"
+          variant="outlined"
+          sx={input}
+        />
+        <br></br>
+        <br></br>
+        <Button variant="outlined" sx={btn}>
+          Добавить опцию
+        </Button>
+      </div>
+      <br></br>
+      <Button variant="outlined" sx={redBtn}>
+        Удалить выбранную опцию
+      </Button>
       <br></br>
       <br></br>
-      <Button variant="outlined" sx={redBtn}>Удалить выбранную опцию</Button>
+      <Button key="refresh" variant="outlined" sx={btn}>
+        Обновить опцию
+      </Button>
       <br></br>
-      <br></br>
-      <Button key="refresh" variant="outlined" sx={btn}>Обновить</Button>
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return { ip: state.ip, config: state.config, uid: state.uid };
+};
+
+export default connect(mapStateToProps, actions)(Options);
+

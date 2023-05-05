@@ -50,7 +50,7 @@ class CloudinaryUploadWidget extends Component {
       (error, result) => {
         if (!error && result && result.event === "success") {
           // console.log("Done! Here is the image info: ", result.info);
-          console.log(ip, uid, config, result.info.secure_url)
+          // console.log(result.info)
           addImage(ip, uid, config, result.info.secure_url, setImages)
           // document
           //   .getElementById("uploadedimage")

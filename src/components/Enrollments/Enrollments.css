@@ -5,3 +5,10 @@
 .list {
     padding-left: 0;
 }
+
+.filters {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}

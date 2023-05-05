@@ -12,6 +12,10 @@ export default function OptionEditor(props) {
     setDay(event.target.value);
   };
 
+  const days = ["Понедельник","Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
+
+  const {handleDayOfTheWeek} = props
+
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
@@ -23,13 +27,9 @@ export default function OptionEditor(props) {
           label="День недели"
           onChange={handleChange}
         >
-          <MenuItem value={1}>Понедельник</MenuItem>
-          <MenuItem value={2}>Вторник</MenuItem>
-          <MenuItem value={3}>Среда</MenuItem>
-          <MenuItem value={4}>Четверг</MenuItem>
-          <MenuItem value={5}>Пятница</MenuItem>
-          <MenuItem value={6}>Суббота</MenuItem>
-          <MenuItem value={7}>Воскресенье</MenuItem>
+          {days.map((el, i) => (
+            <MenuItem key={i} value={i} onClick={() => handleDayOfTheWeek(i + 1)}>{el}</MenuItem>
+          ))} 
         </Select>
       </FormControl>
     </Box>

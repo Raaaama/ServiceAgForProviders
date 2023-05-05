@@ -43,6 +43,11 @@ export const setMyServices = (value) => ({
     payload: value
 })
 
+export const setNewServices = (value) => ({
+    type: "SETNEWSERVICES",
+    payload: value
+})
+
 export const setCurrentService = (value) => ({
     type: "SETCURRENTSERVICE",
     payload: value
@@ -53,3 +58,17 @@ export const setOptions = (value) => ({
     payload: value
 })
 
+export const setOptionFilter = (value) => ({
+    type: "SETOPTIONFILTER",
+    payload: value
+})
+
+export const setStatusFilter = (value) => ({
+    type: "SETSTATUSFILTER",
+    payload: value
+})
+
+export const setServiceFilter = (value) => ({
+    type: "SETSERVICEFILTER",
+    payload: value
+})
