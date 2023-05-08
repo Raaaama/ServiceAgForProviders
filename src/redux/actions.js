@@ -28,6 +28,16 @@ export const setShowServiceModal = (value) => ({
     payload: value
 })
 
+export const setShowChartsModal = (value) => ({
+    type: "SETSHOWCHARTSMODAL",
+    payload: value
+})
+
+export const setEnrollments = (value) => ({
+    type: "SETENROLLMENTS",
+    payload: value
+})
+
 export const setImages = (value) => ({
     type: "SETIMAGES",
     payload: value

@@ -8,7 +8,7 @@ import { refreshMyServices, refreshNewServices } from "../../functions.jsx";
 import { useDispatch } from "react-redux";
 
 function Header(props) {
-  const { ip, uid, config, setShowModal, setImages, setInfo, setMyServices, setNewServices } =
+  const { ip, uid, config, setShowModal, setImages, setInfo, setShowChartsModal } =
     props;
 
   const dispatch = useDispatch()
@@ -36,8 +36,13 @@ function Header(props) {
   }
 
   return (
-    <div className="header" onClick={handleClick}>
-      <h3 className="lk">Личный кабинет</h3>
+    <div className="header">
+      <div className="headerButton" onClick={() => setShowChartsModal(true)}>
+        <h3 className="lk">Статистика</h3>
+      </div>
+      <div className="headerButton" onClick={handleClick}>
+        <h3 className="lk">Личный кабинет</h3>
+      </div>
     </div>
   );
 }

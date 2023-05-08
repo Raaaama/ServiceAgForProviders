@@ -11,9 +11,7 @@ import StatusFilter from "../StatusFilter/StatusFilter";
 import ServiceFilter from "../ServiceFilter/ServiceFilter";
 
 function Enrollments(props) {
-  const [enrollments, setEnrollments] = useState([]);
-
-  const { ip, uid } = props;
+  const { ip, uid, enrollments, setEnrollments } = props;
 
   const config = {
     headers: {
@@ -61,7 +59,7 @@ function Enrollments(props) {
 }
 
 const mapStateToProps = (state) => {
-  return { ip: state.ip, uid: state.uid, showReg: state.showReg };
+  return { ip: state.ip, uid: state.uid, showReg: state.showReg, enrollments: state.enrollments};
 };
 
 export default connect(mapStateToProps, actions)(Enrollments);

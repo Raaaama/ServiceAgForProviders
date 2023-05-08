@@ -20,8 +20,8 @@ import { useDispatch } from 'react-redux';
 
 const modal = {
   color: "black",
-  overflowX: "scroll",
-  overflowY: "hidden",
+  overflowX: "hidden",
+  overflowY: "scroll",
   height: "100%",
 };
 
@@ -36,8 +36,9 @@ const style = {
   boxShadow: 24,
   p: 4,
   height: "max-content",
-  maxHeight: "80%",
-  overflowX: "auto"
+  maxHeight: "84%",
+  overflowY: "auto",
+  // overflowX: "hidden"
 };
 
 const input = {
@@ -75,7 +76,7 @@ function ServiceModal(props) {
 
   const [price, setPrice] = useState(currentService.price)
   const [timePerService, setTimePerService] = useState(currentService.timePerService)
-  const [description, setDescription] = useState(currentService.description)
+  const [description, setDescription] = useState(currentService.description ? currentService.description : "")
 
   const dispatch = useDispatch()
 
@@ -120,7 +121,7 @@ function ServiceModal(props) {
           <TextField defaultValue={currentService.timePerService} onChange={(e) => setTimePerService(e.target.value)} id="outlined-basic" label="Время оказания услуги (мин.)" variant="outlined" sx={input} />
           <br></br>
           <br></br>
-          <TextField defaultValue={currentService.description} onChange={(e) => setDescription(e.target.value)} id="outlined-basic" label="Описание" variant="outlined" sx={input} multiline rows={2}/>
+          <TextField defaultValue={currentService.description ? currentService.description : ""} onChange={(e) => setDescription(e.target.value)} id="outlined-basic" label="Описание" variant="outlined" sx={input} multiline rows={2}/>
           <br></br>
           <br></br>
           <Button key="refresh" variant="outlined" sx={btn} onClick={() => handleUpdateService(currentService.idservices)}>Обновить</Button>

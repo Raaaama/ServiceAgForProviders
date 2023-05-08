@@ -20,8 +20,17 @@ export function deleteService(ip, uid, config, dispatch, id) {
     .post(ip + "/api/service/delete", {
       id: id,
     })
-    .then((res) => {
+    .then(() => {
       refreshMyServices(ip, uid, config, dispatch);
       refreshNewServices(ip, uid, config, dispatch);
     });
+}
+
+export function getOptions(ip, config, idserv, dispatch) {
+  axios
+    .get(ip + "/api/option?idservices=" + idserv, config)
+    .then((res) => {
+      dispatch(actions.setOptions(res.data));
+    })
+    .catch((err) => console.log(err));
 }

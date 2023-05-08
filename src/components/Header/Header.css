@@ -1,13 +1,28 @@
 .header {
-    position: absolute;
+    /* position: fixed; */
+    flex-direction: row;
+    display: flex;
+    justify-content: space-around;
+}
+
+.headerButton {
+    /* position: absolute; */
     top: 0;
     right: 0;
-    margin: 5vh;
+    /* margin: 5vh; */
     background-color: #1a1a1a;
     padding: 1vh;
     border-radius: 1vh;
     cursor: pointer !important;
-    position: fixed;
+    width: 12vw;
+    /* position: fixed; */
+    /* justify-content: space-between; */
+    /* flex-direction: row; */
+    /* display: flex; */
+    /* justify-content: center;
+    align-items: center;
+    vertical-align: middle; */
+    height: 100%;
 }
 
 .lk {

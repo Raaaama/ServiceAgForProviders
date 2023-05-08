@@ -44,7 +44,7 @@ const btn = {
 function AddService(props) {
   const { ip, uid, config, newServices, setMyServices, setNewServices } = props;
 
-  const [newService, setNewService] = useState(newServices[0].idservice_type);
+  const [newService, setNewService] = useState("");
 
   const handleChange = (event) => {
     setNewService(event.target.value);

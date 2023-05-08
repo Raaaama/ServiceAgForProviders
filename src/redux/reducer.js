@@ -1,15 +1,17 @@
 const initialState = {
-  ip: "https://26f0-2-135-26-114.ngrok-free.app",
+  ip: "https://2eab-2-135-26-114.ngrok-free.app",
   uid: "",
   showLogIn: true,
   showReg: false,
   showEnrollments: false,
   showModal: false,
   showServiceModal: false,
+  showChartsModal: false,
+  enrollments: [],
   images: [],
   config: {
     headers: {
-      "Access-Control-Allow-Origin": "https://26f0-2-135-26-114.ngrok-free.app",
+      "Access-Control-Allow-Origin": "https://2eab-2-135-26-114.ngrok-free.app",
       "Content-Type": "application/json",
       "ngrok-skip-browser-warning": "1",
     },
@@ -53,6 +55,12 @@ const reducer = (state = initialState, action) => {
     return {
       ...state,
       showModal: action.payload,
+    }
+  }
+  else if ((action.type == "SETENROLLMENTS")) {
+    return {
+      ...state,
+      enrollments: action.payload,
     }
   }
   else if ((action.type == "SETIMAGES")) {
@@ -113,6 +121,12 @@ const reducer = (state = initialState, action) => {
     return {
       ...state,
       newServices: action.payload,
+    }
+  }
+  else if ((action.type == "SETSHOWCHARTSMODAL")) {
+    return {
+      ...state,
+      showChartsModal: action.payload,
     }
   }
   else {

@@ -17,6 +17,8 @@ import Stack from '@mui/material/Stack';
 
 import CloudinaryUploadWidget from '../CloudinaryWidget/CloudinaryUploadWidget';
 import AddService from '../AddService/AddService';
+import { getOptions } from '../../functions';
+import { useDispatch } from 'react-redux';
 
 const style = {
   position: 'absolute',
@@ -79,6 +81,8 @@ function Settings(props) {
 
   },[info])
 
+  let dispatch = useDispatch()
+
   async function handleClick(service) {
     await axios
       .get(ip + "/api/service/getone?id=" + service.idservices, config)
@@ -87,16 +91,8 @@ function Settings(props) {
         // console.log(res.data[0])
       })
       .catch((err) => console.log(err));
-    axios
-      .get(ip + "/api/option?idservices=" + service.idservices, config)
-      .then((res) => {
-        setOptions(res.data);
-        // console.log(res.data);
-      })
-      .then(() => {
-        setShowServiceModal(true)
-      })
-      .catch((err) => console.log(err));
+      getOptions(ip, config, service.idservices, dispatch)
+      setShowServiceModal(true)
   }
 
   function deleteImage(id) {
