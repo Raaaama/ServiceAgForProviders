@@ -88,7 +88,7 @@ function Settings(props) {
       .get(ip + "/api/service/getone?id=" + service.idservices, config)
       .then((res) => {
         setCurrentService(res.data[0]);
-        // console.log(res.data[0])
+        console.log(res.data[0])
       })
       .catch((err) => console.log(err));
       getOptions(ip, config, service.idservices, dispatch)

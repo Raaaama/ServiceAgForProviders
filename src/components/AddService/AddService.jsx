@@ -58,6 +58,11 @@ function AddService(props) {
         .post(ip + "/api/service", {
           idst: ids,
           idp: uid,
+        }).then((res) => {
+          axios
+            .post(ip + "/api/optiontype", {
+              ids: res.data.insertId,
+            })
         })
         .catch((err) => console.log(err));
       refreshMyServices(ip, uid, config, dispatch);

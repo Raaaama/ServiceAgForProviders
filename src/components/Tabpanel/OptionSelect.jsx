@@ -27,7 +27,7 @@ export default function BasicSelect(props) {
         >
           {options.map((el, i) => (
             <MenuItem key={i} value={el.idoption} onClick={() => handleOption(el.idoption)}>
-              {el.opt}
+              {el.opt + " ★" + el.rating + "(" + el.rating_number + ")"}
             </MenuItem>
           ))}
         </Select>

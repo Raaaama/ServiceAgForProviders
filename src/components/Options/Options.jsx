@@ -91,7 +91,7 @@ function Options(props) {
     if (newOption != "") {
       axios
         .post(ip + "/api/option", {
-          idot: options[0].idoptiontypes,
+          idot: currentService.idoptiontypes,
           opt: newOption,
         })
         .then(() => {
@@ -121,7 +121,7 @@ function Options(props) {
       axios
         .put(ip + "/api/optiontype/", {
           name: optionName,
-          idot: options[0].idoptiontypes,
+          idot: currentService.idoptiontypes,
         })
         .catch((err) => console.log(err));
         getOptions(ip, config, currentService.idservices, dispatch)
@@ -142,7 +142,7 @@ function Options(props) {
     <div>
       <h2>Опции:</h2>
       <TextField
-        defaultValue={hasOptions ? options[0].optionname : ""}
+        defaultValue={currentService.optionname}
         id="outlined-basic"
         label="Название опции"
         variant="outlined"

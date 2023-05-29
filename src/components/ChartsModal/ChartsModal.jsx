@@ -57,10 +57,37 @@ function ChartsModal(props) {
         label: "Кол-во записей",
         data: temp.map((data) => data.count),
         backgroundColor: [
-          "rgba(75,192,192,1)",
-          "#ecf0f1",
-          "#50AF95",
-          "#f3ba2f",
+          // "rgba(75,192,192,1)",
+          // "#ecf0f1",
+          // "#50AF95",
+          // "#f3ba2f",
+          "#2a71d0",
+        ],
+        borderColor: "black",
+        borderWidth: 2,
+      },
+    ],
+  });
+
+  let daysStat = [0,0,0,0,0,0,0]
+
+  for (let i = 0; i < enrollments.length; i++) {
+    // daysStat[enrollments[i].]
+    let dt = new Date(enrollments[i].signUpDate)
+    daysStat[dt.getDay()] += 1
+  }
+
+  const [daysData, setDaysData] = useState({
+    labels: ["Понедельник","Вторник","Среда","Четверг","Пятница","Суббота","Воскресенье"],
+    datasets: [
+      {
+        label: "Кол-во записей",
+        data: daysStat,
+        backgroundColor: [
+          // "rgba(75,192,192,1)",
+          // "#ecf0f1",
+          // "#50AF95",
+          // "#f3ba2f",
           "#2a71d0",
         ],
         borderColor: "black",
@@ -82,6 +109,7 @@ function ChartsModal(props) {
         <Box sx={style}>
           <BarChart chartData={data} />
           {/* <h1>charts</h1> */}
+          <BarChart chartData={daysData} />
         </Box>
       </Modal>
     </div>

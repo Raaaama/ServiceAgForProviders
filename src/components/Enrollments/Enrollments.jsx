@@ -1,9 +1,15 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { encode, decode } from "js-base64";
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
 import "./Enrollments.css";
+
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Snackbar from '@mui/material/Snackbar';
+// import CloseIcon from '@mui/icons-material/Close';
+
 import BasicTable from "../Table/Table";
 import Header from "../Header/Header";
 import OptionFilter from "../Filter/OptionFilter";
@@ -20,6 +26,11 @@ function Enrollments(props) {
       "ngrok-skip-browser-warning": "1",
     },
   };
+
+  function refreshEnrollments() {
+    getEnrollments();
+    handleClick();
+  }
 
   const getEnrollments = () => {
     axios
@@ -44,6 +55,28 @@ function Enrollments(props) {
     getEnrollments();
   }, []);
 
+  //////////////////////////////////////////////////////////////////////
+
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const action = (
+    <Fragment>
+    </Fragment>
+  );
+  ///////////////////////////////////////////////////////
+
   return (
     <div>
       <Header />
@@ -52,8 +85,18 @@ function Enrollments(props) {
         <ServiceFilter enrollments={enrollments}/>
         <OptionFilter data={enrollments}/>
         <StatusFilter />
+        <svg xmlns="http://www.w3.org/2000/svg" style={{ height: "4%", width: "4%", margin: "1%", cursor: "pointer" }} onClick={() => refreshEnrollments()} fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path height="10px" width="10px" stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+        </svg>
       </div>
       <BasicTable data={enrollments} getEnrollments={getEnrollments} />
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        message="Заявки обновлены"
+        action={action}
+      />
     </div>
   );
 }
